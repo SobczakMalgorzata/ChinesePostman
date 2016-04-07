@@ -63,9 +63,17 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestGraphs\Trees\TreeA.cs" />
+    <Compile Include="TestGraphs\Trees\TreeB.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChinskiListonosz.Core\ChinskiListonosz.Core.csproj">
+      <Project>{cbcf954b-3612-4996-bd3f-b492f9ebcb1a}</Project>
+      <Name>ChinskiListonosz.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
