@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,18 @@ namespace ChinskiListonosz.Core
 		public Graph(IEnumerable<int> V) : this(V, new HashSet<Edge>()) { }
 		public Graph(IEnumerable<Edge> E) :
 			this(new HashSet<int>(E.SelectMany(e => new int[] { e.U, e.V })), E) { }
+		/// <summary>
+		/// Constructs a complete graph with k vertices with equal edge weights.
+		/// </summary>
+		/// <param name="k">Number of vertices in complete graph.</param>
+		public Graph(int k) : this(Enumerable.Range(0,k))
+		{
+			for (int u = 0; u < k; u++)
+			for (int v = 0; v < k; v++)
+			{
+				this.AddEdge(new Edge(u, v));
+			}
+		}
 
 		public void AddVertice(int v)
 		{
@@ -97,6 +110,7 @@ namespace ChinskiListonosz.Core
 		public List<Path> Distances()
 		{
 			throw new NotImplementedException();
+
 		}
 	}
 }
