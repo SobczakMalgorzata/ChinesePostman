@@ -10,9 +10,8 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Trees
     {
         public Graph TreeB()
         {
-            return new Graph()
-            {
-                Edges = new List<Edge>()
+            return new Graph(
+                new List<Edge>()
                 {
                     new Edge(0, 1),
                     new Edge(0, 2),
@@ -28,7 +27,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Trees
                     new Edge(5, 12),
                     new Edge(5, 13)
                 }
-            };
+            );
         }
     }
 }
