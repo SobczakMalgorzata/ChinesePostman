@@ -8,11 +8,13 @@ namespace ChinskiListonosz.Core
 {
     public interface IGraph
     {
+        List<Edge> Edges { get; }
+        List<int> Vertices { get; }
         bool IsConnected();
-        int[] Degrees();
-        int NumberOfVertices();
-        int NumberOfEdges();
-        int[,] Distances();
+        List<Tuple<int, int>> Degrees();
+        int NumberOfVertices { get; }
+        int NumberOfEdges{ get; }
+        List<Path> Distances();
         //int ShortestPathFromTo();
     }
 }
