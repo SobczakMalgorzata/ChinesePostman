@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ChinskiListonosz.Core.Tests.TestGraphs.Trees
 {
-    public class TreeB
+    public partial class ExampleTrees
     {
-        public Graph Create()
+        public Graph TreeB()
         {
             return new Graph()
             {

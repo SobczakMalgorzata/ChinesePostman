@@ -63,6 +63,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestGraphs\Graphs\Envelope.cs" />
+    <Compile Include="TestGraphs\Graphs\EnvelopeWeighted.cs" />
+    <Compile Include="TestGraphs\Graphs\NotConnected.cs" />
     <Compile Include="TestGraphs\Trees\TreeA.cs" />
     <Compile Include="TestGraphs\Trees\TreeB.cs" />
   </ItemGroup>

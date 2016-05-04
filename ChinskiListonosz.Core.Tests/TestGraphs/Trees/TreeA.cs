@@ -7,9 +7,9 @@ using ChinskiListonosz.Core;
 
 namespace ChinskiListonosz.Core.Tests.TestGraphs.Trees
 {
-    public class TreeA
+    public partial class ExampleTrees
     {
-        public Graph Create()
+        public Graph TreeA()
         {
             return new Graph()
             {
