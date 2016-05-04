@@ -20,6 +20,9 @@ namespace ChinskiListonosz.Core
             W = w;
         }
 
+        public Edge(Edge e) : this(e.U, e.V, e.W) { }
+        public Edge Clone() { return new Edge(this); }
+
         public bool IsIncident(int v)
         {
             return (U == v || V == v);

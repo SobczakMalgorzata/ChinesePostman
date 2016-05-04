@@ -37,6 +37,16 @@ namespace ChinskiListonosz.Core
                 End = e.U;
             }
         }
+        public Path(Path p)
+        {
+            Start = p.Start;
+            End = p.End;
+            Edges = new LinkedList<Edge>(p.Edges.Select(e => e.Clone()));
+        }
+        public Path Clone()
+        {
+            return new Path(this);
+        }
 
         public int Length
         {

@@ -37,6 +37,11 @@ namespace ChinskiListonosz.Core
 				this.AddEdge(new Edge(u, v));
 			}
 		}
+		public Graph(Graph g) : this(g.Vertices, g.edges.Select(e => e.Clone())) { }
+		public Graph Clone()
+		{
+			return new Graph(this);
+		}
 
 		public void AddVertice(int v)
 		{
@@ -58,7 +63,7 @@ namespace ChinskiListonosz.Core
 		{
 			Edges.Remove(e);
 		}
-
+		
 		public bool IsConnected()
 		{
 			var paths = this.Distances();
