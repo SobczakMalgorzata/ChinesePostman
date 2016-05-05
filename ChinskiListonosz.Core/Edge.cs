@@ -9,15 +9,23 @@ namespace ChinskiListonosz.Core
     public class Edge
     {
 
-        public int U { get; set; }
-        public int V { get; set; }
-        public int W { get; set; }
+        public int U { get; }
+        public int V { get; }
+        public int W { get; }
 
         public Edge(int u, int v, int w = 1)
         {
             U = u;
             V = v;
             W = w;
+        }
+
+        public Edge(Edge e) : this(e.U, e.V, e.W) { }
+        public Edge Clone() { return new Edge(this); }
+
+        public bool IsIncident(int v)
+        {
+            return (U == v || V == v);
         }
 
         public override bool Equals(System.Object obj)
@@ -44,6 +52,16 @@ namespace ChinskiListonosz.Core
             // Return true if the fields match:
             return (W == otherEdge.W 
                     && ((U == otherEdge.U && V == otherEdge.V) || (U == otherEdge.V && V == otherEdge.U)));
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            int hash = 13;
+            hash = hash * 7 + U.GetHashCode();
+            hash = hash * 7 + V.GetHashCode();
+            hash = hash * 7 + W.GetHashCode();
+            return hash;
         }
     }
 }

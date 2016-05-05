@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,69 +7,115 @@ using System.Threading.Tasks;
 
 namespace ChinskiListonosz.Core
 {
-    public class Graph
-    {
-        public List<Edge> Edges { get; set; }
+	public class Graph : IGraph
+	{
+		protected HashSet<int> vertices = new HashSet<int>();
+		public List<int> Vertices { get { return vertices.ToList(); } }
+		protected HashSet<Edge> edges = new HashSet<Edge>();
+		public List<Edge> Edges { get { return edges.ToList(); } }
 
-        public Graph() 
-        {
-             Edges = new List<Edge>();
-        }
+		public Graph(IEnumerable<int> V, IEnumerable<Edge> E)
+		{
+			if (E.Any(e => !V.Contains(e.U) || !V.Contains(e.V)))
+				throw new ArgumentException("Edges can only connect Vertices from V!");
+			vertices = new HashSet<int>(V);
+			edges = new HashSet<Edge>(E);
+		}
+		public Graph() : this(new HashSet<int>(), new HashSet<Edge>()) { }
+		public Graph(IEnumerable<int> V) : this(V, new HashSet<Edge>()) { }
+		public Graph(IEnumerable<Edge> E) :
+			this(new HashSet<int>(E.SelectMany(e => new int[] { e.U, e.V })), E) { }
+		/// <summary>
+		/// Constructs a complete graph with k vertices with equal edge weights.
+		/// </summary>
+		/// <param name="k">Number of vertices in complete graph.</param>
+		public Graph(int k) : this(Enumerable.Range(0,k))
+		{
+			for (int u = 0; u < k; u++)
+			for (int v = 0; v < k; v++)
+			{
+				this.AddEdge(new Edge(u, v));
+			}
+		}
+		public Graph(Graph g) : this(g.Vertices, g.edges.Select(e => e.Clone())) { }
+		public Graph Clone()
+		{
+			return new Graph(this);
+		}
 
-        public Graph Kruskal()
-        {
-            List<Edge> kruskal = new List<Edge>();
-            List<List<int>> forest = new List<List<int>>();
-            int uIndex = 0;
-            int vIndex = 0;
-            //TODO Randomize Edges
-            var rand = new System.Random();
-            Edges = Edges.OrderBy(edge => rand.Next()).ToList();
-            foreach (var edge in Edges)
-            {
-                var indexes = FindSubTreesIndexes(forest, edge);
-                uIndex = indexes.Key;
-                vIndex = indexes.Value;
-                if (uIndex == -1 && vIndex == -1)
-                {
-                    forest.Add(new List<int> { edge.U, edge.V });
-                    kruskal.Add(edge);
-                }
-                else if (uIndex == -1)
-                {
-                    forest[vIndex].Add(edge.U);
-                    kruskal.Add(edge);
-                }
-                else if (vIndex == -1)
-                {
-                    forest[uIndex].Add(edge.V);
-                    kruskal.Add(edge);
-                }
-                else if (uIndex != vIndex)
-                {
-                    forest[uIndex].AddRange(forest[vIndex]);
-                    forest.RemoveAt(vIndex);
-                    kruskal.Add(edge);
-                }
-            }
-            return new Graph(){Edges = kruskal};
-        }
+		public void AddVertice(int v)
+		{
+			vertices.Add(v);
+		}
+		public void RemoveVertice(int v)
+		{
+			vertices.Remove(v);
+			edges.RemoveWhere(e => e.IsIncident(v));
+		}
+		
+		public void AddEdge(Edge e)
+		{
+			if (!vertices.Contains(e.U) || !vertices.Contains(e.V))
+				throw new ArgumentException();
+			Edges.Add(e);
+		}
+		public void RemoveEdge(Edge e)
+		{
+			Edges.Remove(e);
+		}
+		
+		public bool IsConnected()
+		{
+			var paths = this.Distances();
+			for (int u = 0; u < NumberOfVertices; u++)
+			for (int v = u+1; v < NumberOfVertices; v++)
+			{
+				if (paths.Where(path => path.Connects(u,v)).Count() == 0)
+				{
+					return false;
+				}
+			}
+			return true;
+		}
 
-        private static KeyValuePair<int, int> FindSubTreesIndexes(List<List<int>> forest, Edge edge)
-        {
-            int uIndex = -1;
-            int vIndex = -1;
-            //uIndex = forest.IndexOf(forest.Where(subTree => subTree.Contains(edge.U));
-            //vIndex = forest.IndexOf(forest.Where(subTree => subTree.Contains(edge.V));
-            foreach (List<int> subTreeVertices in forest)
-            {
-                if (subTreeVertices.Contains(edge.U))
-                    uIndex = forest.IndexOf(subTreeVertices);
+		public List<Tuple<int,int>> Degrees()
+		{
+			var result = new List<Tuple<int, int>>();
+			var verts = Vertices;
+			var degrees = new int[NumberOfVertices];
+			foreach (var edge in Edges)
+			{
+				degrees[verts.IndexOf(edge.U)]++;
+				degrees[verts.IndexOf(edge.V)]++;                
+			}
+			for (int i = 0; i<NumberOfVertices; i++)
+			{
+				result.Add(new Tuple<int, int>(verts[i], degrees[i]));
+			}
+			return result;
+						
+		}
 
-                if (subTreeVertices.Contains(edge.V))
-                    vIndex = forest.IndexOf(subTreeVertices);
-            }
-            return new KeyValuePair<int, int>(uIndex, vIndex);
-        }
-    }
+		public int NumberOfVertices
+		{
+			get
+			{
+				return this.Vertices.Count;
+			}
+		}
+
+		public int NumberOfEdges
+		{
+			get
+			{
+				return this.Edges.Count;
+			}
+		}
+
+		public List<Path> Distances()
+		{
+			throw new NotImplementedException();
+
+		}
+	}
 }
