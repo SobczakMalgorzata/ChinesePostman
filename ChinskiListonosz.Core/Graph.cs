@@ -24,7 +24,7 @@ namespace ChinskiListonosz.Core
 		public Graph() : this(new HashSet<int>(), new HashSet<Edge>()) { }
 		public Graph(IEnumerable<int> V) : this(V, new HashSet<Edge>()) { }
 		public Graph(IEnumerable<Edge> E) :
-			this(new HashSet<int>(E.SelectMany(e => new int[] { e.U, e.V })), E) { }
+			this(new HashSet<int>(E.SelectMany(e => new int[] { e.U, e.V })).Distinct(), E) { }
 		/// <summary>
 		/// Constructs a complete graph with k vertices with equal edge weights.
 		/// </summary>
