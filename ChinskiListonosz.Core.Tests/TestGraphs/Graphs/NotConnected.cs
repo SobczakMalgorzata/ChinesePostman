@@ -10,16 +10,15 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
     {
         public NotConnected()
         {
+            var a = new Edge(0, 4);
+            var b = new Edge(1, 2);
+            var c = new Edge(2, 3);
+
             graph = new Graph
             (
-                new List<Edge>()
-                {
-                    new Edge(0, 4),
-                    new Edge(1, 2),
-                    new Edge(2, 3)
-                }
+                new List<Edge>() { a, b, c }
             );
-            this.expectedIsConnected = true;
+            this.expectedIsConnected = false;
             this.expectedNEdges = 3;
             this.expectedNVertices = 5;
             this.expectedDegrees = new List<Tuple<int, int>> {
@@ -29,7 +28,13 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
                 new Tuple<int, int>(3,1),
                 new Tuple<int, int>(4,1)
             };
-            this.expectedPaths = new List<Path>() { };
+            this.expectedPaths = new List<Path>()
+            {
+                new Path(new List<Edge>() { a }),
+                new Path(new List<Edge>() { b }),
+                new Path(new List<Edge>() { c }),
+                new Path(new List<Edge>() { b, c })
+            };
         }
     }
 }

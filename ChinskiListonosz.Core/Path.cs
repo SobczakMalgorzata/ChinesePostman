@@ -8,7 +8,7 @@ namespace ChinskiListonosz.Core
 {
     public class Path
     {
-        public LinkedList<Edge> Edges;
+        public LinkedList<Edge> Edges = new LinkedList<Edge>();
         private int start;
         public int Start
         {
@@ -43,6 +43,17 @@ namespace ChinskiListonosz.Core
             End = p.End;
             Edges = new LinkedList<Edge>(p.Edges.Select(e => e.Clone()));
         }
+        public Path(int startVertex)
+        {
+            this.Start = startVertex;
+            this.End = startVertex;
+        }
+        public Path(IEnumerable<Edge> edges, int start) : this(start)
+        {
+            foreach (var e in edges)
+                this.AddToEnd(e);
+        }
+        public Path(IEnumerable<Edge> edges) : this(edges, edges.First().U) { }
         public Path Clone()
         {
             return new Path(this);
