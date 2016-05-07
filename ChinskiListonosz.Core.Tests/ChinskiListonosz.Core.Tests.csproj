@@ -73,6 +73,7 @@
     <Compile Include="TestGraphs\Graphs\NotConnected.cs" />
     <Compile Include="TestGraphs\Trees\TreeA.cs" />
     <Compile Include="TestGraphs\Trees\TreeB.cs" />
+    <Compile Include="TestGraphs\Trees\TreeTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
