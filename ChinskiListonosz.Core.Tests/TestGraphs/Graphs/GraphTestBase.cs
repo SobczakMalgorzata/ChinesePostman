@@ -17,7 +17,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         [Fact]
         public void IsConnectedTest()
         {
-            Assert.Equal(expectedIsConnected, graph.IsConnected());
+            Assert.Equal(expectedIsConnected, graph.IsConnected);
         }
 
         [Fact]
@@ -57,10 +57,15 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         [Fact]
         public void KruskalGivesTreeTest()
         {
-            var tree = graph.Kruskal();
-            Assert.True(tree.IsConnected());
-            Assert.Equal(expectedNVertices - 1, tree.NumberOfEdges);
-            Assert.Equal(expectedNVertices, tree.NumberOfVertices);
+            if (graph.IsConnected)
+            {
+                var tree = graph.Kruskal();
+                Assert.True(tree.IsConnected);
+                Assert.Equal(expectedNVertices - 1, tree.NumberOfEdges);
+                Assert.Equal(expectedNVertices, tree.NumberOfVertices);
+            }
+            else
+                Assert.Throws<ArgumentException>(() => graph.Kruskal());
         }
 
         [Fact]

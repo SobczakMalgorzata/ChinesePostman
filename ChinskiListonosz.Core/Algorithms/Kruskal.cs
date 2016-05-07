@@ -10,6 +10,8 @@ namespace ChinskiListonosz.Core.Algorithms
     {
         public static Graph Kruskal(this IGraph graph)
         {
+            if (!graph.IsConnected)
+                throw new ArgumentException("Input graph must be connected!");
             var kruskal = new List<Edge>();
             var forest = new List<List<int>>();
             int uIndex = 0;

@@ -65,20 +65,23 @@ namespace ChinskiListonosz.Core
 			Edges.Remove(e);
 		}
 		
-		public bool IsConnected()
+		public bool IsConnected
 		{
-			var v = vertices.First();
-			var reachable = new List<int>();
-			var newReachable = new List<int>() { v };
-			while (newReachable.Count > 0)
+			get
 			{
-				reachable = reachable.Union(newReachable).ToList();
-				newReachable = newReachable.SelectMany(u => ConnectedTo(u)).ToList();
-				newReachable = newReachable.Except(reachable).ToList();
+				var v = vertices.First();
+				var reachable = new List<int>();
+				var newReachable = new List<int>() { v };
+				while (newReachable.Count > 0)
+				{
+					reachable = reachable.Union(newReachable).ToList();
+					newReachable = newReachable.SelectMany(u => ConnectedTo(u)).ToList();
+					newReachable = newReachable.Except(reachable).ToList();
+				}
+				if (vertices.All(vertex => reachable.Contains(vertex)))
+					return true;
+				return false;
 			}
-			if (vertices.All(vertex => reachable.Contains(vertex)))
-				return true;
-			return false;
 		}
 
 		private List<int> ConnectedTo(int u)
