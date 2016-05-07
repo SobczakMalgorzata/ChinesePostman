@@ -13,6 +13,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         protected bool expectedIsConnected;
         protected List<Tuple<int, int>> expectedDegrees;
         protected List<Path> expectedPaths;
+        protected List<Edge> expectedTreeEdges;
 
         [Fact]
         public void IsConnectedTest()
@@ -55,7 +56,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         }
 
         [Fact]
-        public void KruskalGivesTreeTest()
+        public void KruskalGivesTree()
         {
             if (graph.IsConnected)
             {
@@ -71,8 +72,18 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         [Fact]
         public void KruskalGivesMinimalTree()
         {
-            var tree = graph.Kruskal();
-            Assert.True(false, "TEST NotImplemented");
+            if(graph.IsConnected)
+            {
+                var tree = graph.Kruskal();
+                var edges = tree.Edges;
+
+                foreach (var e in edges)
+                    Assert.Contains(e, expectedTreeEdges);
+
+                foreach (var exedge in expectedTreeEdges)
+                    Assert.Contains(exedge, edges);
+            }
+            
         }
     }
 }
