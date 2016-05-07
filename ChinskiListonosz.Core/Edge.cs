@@ -28,6 +28,18 @@ namespace ChinskiListonosz.Core
             return (U == v || V == v);
         }
 
+        public int OtherEndTo(int u)
+        {
+            if (U == u)
+                return V;
+            return U;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} -> {1} ({2})", U, V, W);
+        }
+
         public override bool Equals(System.Object obj)
         {
             // If parameter is null return false.
@@ -59,7 +71,7 @@ namespace ChinskiListonosz.Core
         {
             int hash = 13;
             hash = hash * 7 + U.GetHashCode();
-            hash = hash * 7 + V.GetHashCode();
+            hash = V.GetHashCode();
             hash = hash * 7 + W.GetHashCode();
             return hash;
         }

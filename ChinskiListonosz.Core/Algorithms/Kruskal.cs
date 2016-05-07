@@ -10,15 +10,15 @@ namespace ChinskiListonosz.Core.Algorithms
     {
         public static Graph Kruskal(this IGraph graph)
         {
+            if (!graph.IsConnected)
+                throw new ArgumentException("Input graph must be connected!");
+
             var kruskal = new List<Edge>();
             var forest = new List<List<int>>();
             int uIndex = 0;
             int vIndex = 0;
 
-            var rand = new System.Random();
-            var edges = new HashSet<Edge>(graph.Edges.OrderBy(edge => rand.Next()).ToList());
-
-            foreach (var edge in graph.Edges)
+            foreach (var edge in graph.Edges.OrderBy(e=> e.W))
             {
                 var indexes = FindSubTreesIndexes(forest, edge);
                 uIndex = indexes.Key;

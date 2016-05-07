@@ -24,7 +24,7 @@ namespace ChinskiListonosz.Core
 		public Graph() : this(new HashSet<int>(), new HashSet<Edge>()) { }
 		public Graph(IEnumerable<int> V) : this(V, new HashSet<Edge>()) { }
 		public Graph(IEnumerable<Edge> E) :
-			this(new HashSet<int>(E.SelectMany(e => new int[] { e.U, e.V })), E) { }
+			this(new HashSet<int>(E.SelectMany(e => new int[] { e.U, e.V })).Distinct(), E) { }
 		/// <summary>
 		/// Constructs a complete graph with k vertices with equal edge weights.
 		/// </summary>
@@ -55,27 +55,38 @@ namespace ChinskiListonosz.Core
 		
 		public void AddEdge(Edge e)
 		{
-			if (!vertices.Contains(e.U) || !vertices.Contains(e.V))
+			if (vertices.Contains(e.U) && vertices.Contains(e.V))
+				Edges.Add(e);
+			else
 				throw new ArgumentException();
-			Edges.Add(e);
 		}
 		public void RemoveEdge(Edge e)
 		{
 			Edges.Remove(e);
 		}
 		
-		public bool IsConnected()
+		public bool IsConnected
 		{
-			var paths = this.Distances();
-			for (int u = 0; u < NumberOfVertices; u++)
-			for (int v = u+1; v < NumberOfVertices; v++)
+			get
 			{
-				if (paths.Where(path => path.Connects(u,v)).Count() == 0)
+				var v = vertices.First();
+				var reachable = new List<int>();
+				var newReachable = new List<int>() { v };
+				while (newReachable.Count > 0)
 				{
-					return false;
+					reachable = reachable.Union(newReachable).ToList();
+					newReachable = newReachable.SelectMany(u => ConnectedTo(u)).ToList();
+					newReachable = newReachable.Except(reachable).ToList();
 				}
+				if (vertices.All(vertex => reachable.Contains(vertex)))
+					return true;
+				return false;
 			}
-			return true;
+		}
+
+		private List<int> ConnectedTo(int u)
+		{
+			return Edges.Where(e => e.IsIncident(u)).Select(e => e.OtherEndTo(u)).ToList();
 		}
 
 		public List<Tuple<int,int>> Degrees()

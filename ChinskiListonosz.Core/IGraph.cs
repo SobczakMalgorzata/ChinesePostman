@@ -20,7 +20,7 @@ namespace ChinskiListonosz.Core
         /// Checks if the graph is connected.
         /// </summary>
         /// <returns></returns>
-        bool IsConnected();
+        bool IsConnected { get; }
         /// <summary>
         /// Creates a list of degrees of vertices.
         /// </summary>

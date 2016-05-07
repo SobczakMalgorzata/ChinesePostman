@@ -66,6 +66,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="PathTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGraphs\Graphs\Envelope.cs" />
     <Compile Include="TestGraphs\Graphs\EnvelopeWeighted.cs" />
