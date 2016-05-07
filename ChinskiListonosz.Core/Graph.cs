@@ -55,9 +55,10 @@ namespace ChinskiListonosz.Core
 		
 		public void AddEdge(Edge e)
 		{
-			if (!vertices.Contains(e.U) || !vertices.Contains(e.V))
+			if (vertices.Contains(e.U) && vertices.Contains(e.V))
+				Edges.Add(e);
+			else
 				throw new ArgumentException();
-			Edges.Add(e);
 		}
 		public void RemoveEdge(Edge e)
 		{
@@ -66,16 +67,23 @@ namespace ChinskiListonosz.Core
 		
 		public bool IsConnected()
 		{
-			var paths = this.Distances();
-			for (int u = 0; u < NumberOfVertices; u++)
-			for (int v = u+1; v < NumberOfVertices; v++)
+			var v = vertices.First();
+			var reachable = new List<int>();
+			var newReachable = new List<int>() { v };
+			while (newReachable.Count > 0)
 			{
-				if (paths.Where(path => path.Connects(u,v)).Count() == 0)
-				{
-					return false;
-				}
+				reachable = reachable.Union(newReachable).ToList();
+				newReachable = newReachable.SelectMany(u => ConnectedTo(u)).ToList();
+				newReachable = newReachable.Except(reachable).ToList();
 			}
-			return true;
+			if (vertices.All(vertex => reachable.Contains(vertex)))
+				return true;
+			return false;
+		}
+
+		private List<int> ConnectedTo(int u)
+		{
+			return Edges.Where(e => e.IsIncident(u)).Select(e => e.OtherEndTo(u)).ToList();
 		}
 
 		public List<Tuple<int,int>> Degrees()
