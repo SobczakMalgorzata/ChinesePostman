@@ -129,58 +129,69 @@ namespace ChinskiListonosz.Core
             allDist = new List<Path>();
             foreach (var startVertex in Vertices)
             {
-                int[] dist = new int[NumberOfVertices];
-                int[] prev = new int[NumberOfVertices];
-                var unvisited = this.Vertices;
-
-                for (int i=0; i < NumberOfVertices; i++)
-                    dist[i] = int.MaxValue;
-                dist[startVertex] = 0;
-
-                var v = startVertex;
-
-                while (unvisited.Count > 0)
-                {
-                    var edgeList = this.Edges
-                        .Where(e => e.IsIncident(v))
-                        .Where(e => unvisited.Contains(e.OtherEndTo(v)))
-                        .OrderBy(e => e.W)
-                        .ToList();
-
-                    foreach (var e in edgeList)
-                    {
-                        var u = e.OtherEndTo(v);
-                        if (dist[v] + e.W < dist[u])
-                        {
-                            dist[u] = dist[v] + e.W;
-                            prev[u] = v;
-                        }
-                    }
-
-                    unvisited.Remove(v);
-                    v = unvisited.Min(ver => dist[ver]);
-                }
-                foreach (var ver in this.Vertices)
-                {
-                    if (ver != startVertex)
-                    {
-                        Path p = new Path(ver);
-                        var a = ver;
-                        var b = prev[ver];
-                        while (a != startVertex)
-                        {
-                            p.AddToStart(this.Edges.Single(e => e.IsIncident(a) && e.IsIncident(b)));
-                            a = b;
-                            b = prev[a];
-                        }
-                        allDist.Add(p);
-                    }
-                }
+                allDist.AddRange(Dijkstra(startVertex));
 
             }
             return allDist;
 		}
 
+        private List<Path> Dijkstra(int startVertex)
+        {
+            int[] dist = new int[NumberOfVertices];
+            int[] prev = new int[NumberOfVertices];
+            var unvisited = this.Vertices;
 
-	}
+            for (int i = 0; i < NumberOfVertices; i++)
+                dist[i] = int.MaxValue;
+            dist[startVertex] = 0;
+
+            var v = startVertex;
+
+            while (unvisited.Count > 0)
+            {
+                var edgeList = this.Edges
+                    .Where(e => e.IsIncident(v))
+                    .Where(e => unvisited.Contains(e.OtherEndTo(v)))
+                    .OrderBy(e => e.W)
+                    .ToList();
+
+                foreach (var e in edgeList)
+                {
+                    var u = e.OtherEndTo(v);
+                    if (dist[v] + e.W < dist[u])
+                    {
+                        dist[u] = dist[v] + e.W;
+                        prev[u] = v;
+                    }
+                }
+
+                unvisited.Remove(v);
+                v = unvisited.Min(ver => dist[ver]);
+            }
+
+            return RecreatePaths(startVertex, prev);
+        }
+
+        private List<Path> RecreatePaths(int startVertex, int[] prev)
+        {
+            var paths = new List<Path>();
+            foreach (var ver in this.Vertices)
+            {
+                if (ver != startVertex)
+                {
+                    Path p = new Path(ver);
+                    var a = ver;
+                    var b = prev[ver];
+                    while (a != startVertex)
+                    {
+                        p.AddToStart(this.Edges.Single(e => e.IsIncident(a) && e.IsIncident(b)));
+                        a = b;
+                        b = prev[a];
+                    }
+                    paths.Add(p);
+                }
+            }
+            return paths;
+        }
+    }
 }
