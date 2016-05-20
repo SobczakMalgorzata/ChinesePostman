@@ -53,7 +53,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
                 new Path(new List<Edge> {d}, 2)
             };
 
-            this.expectedTreeEdges = new List<Edge>() { a, c, d };
+            this.expectedTreeEdges = new List<Edge>() { a, b, c };
             this.expectedEdgesToDuplicate = new List<Edge> { a, d };
         }
 

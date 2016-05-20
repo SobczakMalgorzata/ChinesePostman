@@ -1,7 +1,6 @@
 ﻿using ChinskiListonosz.Core.Algorithms;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
