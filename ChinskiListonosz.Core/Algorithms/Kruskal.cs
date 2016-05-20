@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChinskiListonosz.Core.Algorithms
 {
-    public static class GraphAlgorithms
+    public static partial class GraphAlgorithms
     {
         public static Graph Kruskal(this IGraph graph)
         {
