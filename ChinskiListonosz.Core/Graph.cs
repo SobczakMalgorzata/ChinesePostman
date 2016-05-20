@@ -146,7 +146,7 @@ namespace ChinskiListonosz.Core
         private List<Path> Dijkstra(int startVertex)
         {
             int[] dist = new int[NumberOfVertices];
-            int[] prev = new int[NumberOfVertices];
+            int?[] prev = new int?[NumberOfVertices];
             var unvisited = this.Vertices;
 
             for (int i = 0; i < NumberOfVertices; i++)
@@ -180,7 +180,7 @@ namespace ChinskiListonosz.Core
             return RecreatePaths(startVertex, prev);
         }
 
-        private List<Path> RecreatePaths(int startVertex, int[] prev)
+        private List<Path> RecreatePaths(int startVertex, int?[] prev)
         {
             var paths = new List<Path>();
             foreach (var ver in this.Vertices)
@@ -190,13 +190,15 @@ namespace ChinskiListonosz.Core
                     Path p = new Path(ver);
                     var a = ver;
                     var b = prev[ver];
-                    while (a != startVertex)
+
+                    while (a != startVertex && b!=null)
                     {
-                        p.AddToStart(this.Edges.Single(e => e.IsIncident(a) && e.IsIncident(b)));
-                        a = b;
+                        p.AddToStart(this.Edges.Single(e => e.IsIncident(a) && e.IsIncident((int)b)));
+                        a = (int)b;
                         b = prev[a];
                     }
-                    paths.Add(p);
+                    if(a == startVertex)
+                        paths.Add(p);
                 }
             }
             return paths;
