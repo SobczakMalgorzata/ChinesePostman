@@ -7,29 +7,30 @@ using ChinskiListonosz.Core;
 
 namespace ChinskiListonosz.Core.Tests.TestGraphs.Trees
 {
-    public partial class ExampleTrees
+    public class TreeA : TreeTestBase
     {
-        public Graph TreeA()
+        public TreeA()
         {
-            return new Graph
+            var a = new Edge(0, 1);
+            var b = new Edge(0, 2);
+            var c = new Edge(0, 3);
+            var d = new Edge(0, 4);
+            var e = new Edge(2, 5);
+            var f = new Edge(3, 6);
+            var g = new Edge(4, 7);
+            var h = new Edge(7, 8);
+            var i = new Edge(7, 9);
+            var j = new Edge(7, 10);
+            var k = new Edge(10, 11);
+            var l = new Edge(10, 12);
+            var m = new Edge(10, 13);
+
+
+            tree = new Graph
             (
-                new List<Edge>()
-                {
-                    new Edge(0, 1),
-                    new Edge(0, 2),
-                    new Edge(0, 3),
-                    new Edge(0, 4),
-                    new Edge(2, 5),
-                    new Edge(3, 6),
-                    new Edge(4, 7),
-                    new Edge(7, 8),
-                    new Edge(7, 9),
-                    new Edge(7, 10),
-                    new Edge(10, 11),
-                    new Edge(10, 12),
-                    new Edge(10, 13)
-                }
+                new List<Edge>() { a, b, c, d, e, f, g, h, i, j, k, l, m }
             );
+            expectedReducedEdges = new List<Edge>() { a, e, f, g, h, i, k, l, m };
         }
     }
 }

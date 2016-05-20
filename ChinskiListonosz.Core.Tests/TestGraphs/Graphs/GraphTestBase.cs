@@ -1,6 +1,7 @@
 ﻿using ChinskiListonosz.Core.Algorithms;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
@@ -14,6 +15,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         protected List<Tuple<int, int>> expectedDegrees;
         protected List<Path> expectedPaths;
         protected List<Edge> expectedTreeEdges;
+        protected List<Edge> expectedEdgesToDuplicate;
 
         [Fact]
         public void IsConnectedTest()
@@ -84,6 +86,18 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
                     Assert.Contains(exedge, edges);
             }
             
+        }
+
+        [Fact(Skip = "Hangs tests")]
+        public void GetsProperEdgeDoubles()
+        {
+            
+        }
+
+        [Fact(Skip = "Hangs tests")]
+        public void Postman()
+        {
+
         }
     }
 }

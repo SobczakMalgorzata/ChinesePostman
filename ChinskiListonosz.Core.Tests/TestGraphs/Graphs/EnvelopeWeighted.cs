@@ -57,6 +57,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
             };
 
             this.expectedTreeEdges = new List<Edge>() { a, b, d, f };
+            this.expectedEdgesToDuplicate = new List<Edge>() { a, b, d };
         }
 
         

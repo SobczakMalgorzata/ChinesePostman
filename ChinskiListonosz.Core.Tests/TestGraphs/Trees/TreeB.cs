@@ -6,28 +6,28 @@ using System.Threading.Tasks;
 
 namespace ChinskiListonosz.Core.Tests.TestGraphs.Trees
 {
-    public partial class ExampleTrees
+    public class TreeB : TreeTestBase
     {
-        public Graph TreeB()
+        public TreeB()
         {
-            return new Graph(
-                new List<Edge>()
-                {
-                    new Edge(0, 1),
-                    new Edge(0, 2),
-                    new Edge(0, 3),
-                    new Edge(0, 4),
-                    new Edge(0, 5),
-                    new Edge(1, 6),
-                    new Edge(2, 7),
-                    new Edge(3, 8),
-                    new Edge(4, 9),
-                    new Edge(4, 10),
-                    new Edge(5, 11),
-                    new Edge(5, 12),
-                    new Edge(5, 13)
-                }
-            );
+            var a = new Edge(0, 1);
+            var b = new Edge(0, 2);
+            var c = new Edge(0, 3);
+            var d = new Edge(0, 4);
+            var e = new Edge(0, 5);
+            var f = new Edge(1, 6);
+            var g = new Edge(2, 7);
+            var h = new Edge(3, 8);
+            var i = new Edge(4, 9);
+            var j = new Edge(4, 10);
+            var k = new Edge(5, 11);
+            var l = new Edge(5, 12);
+            var m = new Edge(5, 13);
+
+
+            tree = new Graph(new List<Edge>() { a, b, c, d, e, f, g, h, i, j, k, l, m });
+
+            expectedReducedEdges = new List<Edge>() { d, f, g, h, i, j, k, l, m };
         }
     }
 }
