@@ -8,10 +8,10 @@ using Xunit;
 
 namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
 {
-    public class CrossedSquare : ConnectedGraphTestBase
+    public class MultiCroseedSquare : ConnectedGraphTestBase
     {
         protected List<Edge> expectedReducedTree;
-        public CrossedSquare()
+        public MultiCroseedSquare()
         {
             var a = new Edge(0, 1, 1);
             var b = new Edge(0, 2, 5);
@@ -24,7 +24,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
             
 
             graph =
-            new Graph(
+            new MultiGraph(
                 new List<Edge>() { a, b, c, d, e, f }
             );
 

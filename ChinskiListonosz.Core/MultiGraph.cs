@@ -6,81 +6,71 @@ using System.Threading.Tasks;
 
 namespace ChinskiListonosz.Core
 {
-    public class MultiGraph : IGraph
+    public class MultiGraph : GraphBase
     {
-        protected HashSet<int> vertices = new HashSet<int>();
-        public List<int> Vertices { get { return vertices.ToList(); } }
         protected Dictionary<Edge,int> edges = new Dictionary<Edge,int>();
-        public List<Edge> Edges { get { return edges.Keys.ToList(); } }
-
-        public MultiGraph()
-        {
-            throw new NotImplementedException();
-        }
-        
-        public bool IsConnected
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public int NumberOfEdges
-        {
-            get { return edges.Count(); }
-        }
-
-        public int NumberOfVertices
+        public override List<Edge> Edges
         {
             get
             {
-                return vertices.Count();
+               return edges.SelectMany(edgeN => Enumerable.Repeat(edgeN.Key, edgeN.Value)).ToList();
             }
         }
         
-        public List<Tuple<int, int>> Degrees()
+        public MultiGraph(IEnumerable<int> V, IEnumerable<Edge> E)
         {
-            var result = new List<Tuple<int, int>>();
-            var verts = Vertices;
+            if (E.Any(e => !V.Contains(e.U) || !V.Contains(e.V)))
+                throw new ArgumentException("Edges can only connect Vertices from V!");
+            vertices = new HashSet<int>(V);
+            edges = E.GroupBy(e => e).ToDictionary(g => g.Key, g => g.Count());
+        }
+        public MultiGraph(IEnumerable<Edge> E) : this( E.SelectMany(e => new int[] { e.U, e.V }), E) { }
+        public MultiGraph(IGraph G) : this(G.Vertices, G.Edges) { }
+
+        public override int NumberOfEdges { get { return edges.Sum(edgeN => edgeN.Value); } }
+        public override int NumberOfVertices { get { return vertices.Count(); } }
+
+
+        public override IGraph Subgraph(List<int> vertices)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RemoveVertice(int v)
+        {
+            vertices.Remove(v);
+            foreach(var edgeN in edges.Where(e => e.Key.IsIncident(v)))
+            {
+                edges.Remove(edgeN.Key);
+            }
+        }
+
+        public override void AddEdge(Edge e)
+        {
+            if (edges.ContainsKey(e))
+                edges[e]++;
+            else
+                edges.Add(e, 1);
+        }
+
+        public override void RemoveEdge(Edge e)
+        {
+            if (edges[e] == 1)
+                edges.Remove(e);
+            else
+                edges[e]--;
+        }
+
+        protected override int[] DegreesFromEdges(List<int> vertices)
+        {
             var degrees = new int[NumberOfVertices];
-            foreach (var edge in Edges)
+            foreach (var edgeN in edges)
             {
-                degrees[verts.IndexOf(edge.U)]++;
-                degrees[verts.IndexOf(edge.V)]++;
+                degrees[vertices.IndexOf(edgeN.Key.U)] += edgeN.Value;
+                degrees[vertices.IndexOf(edgeN.Key.V)] += edgeN.Value;
             }
-            for (int i = 0; i < NumberOfVertices; i++)
-            {
-                result.Add(new Tuple<int, int>(verts[i], degrees[i]));
-            }
-            return result;
-        }
 
-        public List<Path> Distances()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IGraph Subgraph(List<int> vertices)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddVertice(int v)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveVertice(int v)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddEdge(Edge e)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveEdge(Edge e)
-        {
-            throw new NotImplementedException();
+            return degrees;
         }
     }
 }
