@@ -17,11 +17,16 @@ namespace ChinskiListonosz.Core
             }
         }
         
-        public MultiGraph()
+        public MultiGraph(IEnumerable<int> V, IEnumerable<Edge> E)
         {
-            throw new NotImplementedException();
+            if (E.Any(e => !V.Contains(e.U) || !V.Contains(e.V)))
+                throw new ArgumentException("Edges can only connect Vertices from V!");
+            vertices = new HashSet<int>(V);
+            edges = E.GroupBy(e => e).ToDictionary(g => g.Key, g => g.Count());
         }
-        
+        public MultiGraph(IEnumerable<Edge> E) : this( E.SelectMany(e => new int[] { e.U, e.V }), E) { }
+        public MultiGraph(IGraph G) : this(G.Vertices, G.Edges) { }
+
         public override int NumberOfEdges { get { return edges.Sum(edgeN => edgeN.Value); } }
         public override int NumberOfVertices { get { return vertices.Count(); } }
 
