@@ -14,7 +14,6 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         protected List<Tuple<int, int>> expectedDegrees;
         protected List<Path> expectedPaths;
         protected List<Edge> expectedTreeEdges;
-        protected List<Edge> expectedEdgesToDuplicate;
         protected Path expectedEulerCycle;
 
         [Fact]
@@ -63,39 +62,6 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
                 Assert.Throws<ArgumentException>(() => graph.Kruskal());
         }
 
-        [Fact]
-        public void KruskalGivesMinimalTree()
-        {
-            if(graph.IsConnected)
-            {
-                var tree = graph.Kruskal();
-                var edges = tree.Edges;
-
-                edges.AssertSetlikeEqual(expectedTreeEdges);
-            }
-            
-        }
-
-        [Fact]
-        public void GetsProperEdgeDoubles()
-        {
-            if (graph.IsConnected)
-            {
-                var tree = graph.Kruskal();
-                var reduced = tree.Reduce();
-
-                reduced.Edges.AssertSetlikeEqual(expectedEdgesToDuplicate);
-            }
-        }
-
-        [Fact]
-        public void Postman()
-        {
-            if (graph.IsConnected)
-            {
-                var eulerCycle = graph.Postman(2);
-                Assert.Equal(expectedEulerCycle, eulerCycle);
-            }
-        }
+        
     }
 }

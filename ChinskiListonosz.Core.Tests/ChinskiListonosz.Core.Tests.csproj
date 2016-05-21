@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="PathTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestGraphs\Graphs\ConnectedGraphTestBase.cs" />
     <Compile Include="TestGraphs\Graphs\CrossedSquare.cs" />
     <Compile Include="TestGraphs\Graphs\EnvelopeWeighted.cs" />
     <Compile Include="TestGraphs\Graphs\GraphTestBase.cs" />

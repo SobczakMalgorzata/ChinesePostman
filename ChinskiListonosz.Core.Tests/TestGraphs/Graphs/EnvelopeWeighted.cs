@@ -8,7 +8,7 @@ using Xunit;
 
 namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
 {
-    public class EnvelopeWeighted : GraphTestBase
+    public class EnvelopeWeighted : ConnectedGraphTestBase
     {
         public EnvelopeWeighted()
         {
@@ -57,7 +57,6 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
             };
 
             this.expectedTreeEdges = new List<Edge>() { a, b, d, e };
-            this.expectedEdgesToDuplicate = new List<Edge>() { a, b, d };
         }
 
         

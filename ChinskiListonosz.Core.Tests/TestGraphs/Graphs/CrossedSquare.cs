@@ -8,8 +8,9 @@ using Xunit;
 
 namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
 {
-    public class CroseedSquare : GraphTestBase
+    public class CroseedSquare : ConnectedGraphTestBase
     {
+        protected List<Edge> expectedReducedTree;
         public CroseedSquare()
         {
             var a = new Edge(0, 1, 1);
@@ -54,9 +55,20 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
             };
 
             this.expectedTreeEdges = new List<Edge>() { a, b, c };
-            this.expectedEdgesToDuplicate = new List<Edge> { b, c };
+            this.expectedReducedTree = new List<Edge> { b, c };
         }
 
+        [Fact]
+        public void GetsProperReducedTree()
+        {
+            if (graph.IsConnected)
+            {
+                var tree = graph.Kruskal();
 
+                var reduced = tree.Reduce();
+
+                reduced.Edges.AssertSetlikeEqual(expectedReducedTree);
+            }
+        }
     }
 }
