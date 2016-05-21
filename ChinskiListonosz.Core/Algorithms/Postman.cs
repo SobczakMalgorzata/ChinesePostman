@@ -8,18 +8,27 @@ namespace ChinskiListonosz.Core.Algorithms
 {
     public static partial class GraphAlgorithms
     {
-        public static Path Postman(this IGraph graph, int StartPoint)
+        public static Path Postman(this IGraph graph, int startPoint)
         {
-            throw new NotImplementedException();
-            var Odds = graph.Degrees().Where(vdeg => vdeg.Item2 % 2 == 1).Select(vdeg => vdeg.Item1).ToList();
+            var Odds = graph.Degrees().Where(vdeg => vdeg.Item2.IsOdd()).Select(vdeg => vdeg.Item1).ToList();
+            var Eprime = new List<Edge>(graph.Edges);
+
             if(Odds.Count < 2)
             {
-
+                return graph.EulerCycle(startPoint);
             }
+
             else if (Odds.Count == 2)
             {
+                var additionalPath = graph.Distances()
+                                    .Where(p => p.Connects(Odds[0], Odds[1]))
+                                    .OrderBy(p => p.Length)
+                                    .First();
+
+                Eprime.AddRange(additionalPath.Edges);
 
             }
+
             else
             {
                 var distances = graph.Distances();
@@ -28,12 +37,11 @@ namespace ChinskiListonosz.Core.Algorithms
                 var H = new Graph(Odds, HEdges);
                 var T = H.Kruskal();
                 var Tprime = T.Reduce();
-                var GprimeEdges = new List<Edge>(graph.Edges);
-                GprimeEdges.AddRange(Tprime.Edges);
-                //var Gprime = new MultiGraph(graph.Vertices, GprimeEdges);
 
+                Eprime.AddRange(Tprime.Edges);
             }
-
+            var Gprime = new MultiGraph(graph.Vertices, Eprime);
+            return Gprime.EulerCycle(startPoint);
         }
     }
 }
