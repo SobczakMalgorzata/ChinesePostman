@@ -69,6 +69,7 @@
     <Compile Include="PathTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGraphs\Graphs\ConnectedGraphTestBase.cs" />
+    <Compile Include="TestGraphs\Graphs\Eight.cs" />
     <Compile Include="TestGraphs\Graphs\MultiCrossedSquare.cs" />
     <Compile Include="TestGraphs\Graphs\CrossedSquare.cs" />
     <Compile Include="TestGraphs\Graphs\EnvelopeWeighted.cs" />
@@ -90,9 +91,7 @@
       <Name>ChinskiListonosz.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestCases\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

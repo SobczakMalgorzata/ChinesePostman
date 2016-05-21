@@ -21,7 +21,7 @@ namespace ChinskiListonosz.Core.Algorithms
                         .Select(tup => tup.Item1)
                         .ToList();
 
-            for (int i = 0; i < evenV.Count(); i+=2)
+            for (int i = 0; i < evenV.Count(); i += 2)
             {
                 var p = dists.Single(path => path.Connects(evenV[i], evenV[i + 1]));
                 foreach (var edge in p.Edges)
@@ -36,15 +36,6 @@ namespace ChinskiListonosz.Core.Algorithms
                                 .ToList();
 
             return new Graph(tree.Vertices, selectedEdges);
-        }
-
-        private static bool IsEven(this int x)
-        {
-            return x % 2 == 0;
-        }
-        private static bool IsOdd(this int x)
-        {
-            return x % 2 == 1;
         }
     }
 }
