@@ -33,7 +33,7 @@ namespace ChinskiListonosz.Core
 
         private List<int> ConnectedTo(int u)
         {
-            return Edges.Where(e => e.IsIncident(u)).Select(e => e.OtherEndTo(u)).ToList();
+            return Edges.Where(e => e.IsIncident(u)).Select(e => e.OtherEndTo(u)).Distinct().ToList();
         }
 
         public abstract int NumberOfEdges { get; }
