@@ -15,6 +15,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         protected List<Path> expectedPaths;
         protected List<Edge> expectedTreeEdges;
         protected List<Edge> expectedEdgesToDuplicate;
+        protected Path expectedEulerCycle;
 
         [Fact]
         public void IsConnectedTest()
@@ -26,11 +27,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         public void DegreesTest()
         {
             var result = graph.Degrees();
-            foreach (var x in result)
-                Assert.Contains(x, expectedDegrees);
-            
-            foreach (var ed in expectedDegrees)
-                Assert.Contains(ed, result);
+            result.AssertSetlikeEqual(expectedDegrees);
         }
 
         [Fact]
@@ -49,11 +46,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         public void DistancesTableTest()
         {
             var result = graph.Distances();
-            foreach (var x in result)
-                Assert.Contains(x, expectedPaths);
-
-            foreach (var expath in expectedPaths)
-                Assert.Contains(expath, result);
+            result.AssertSetlikeEqual(expectedPaths);
         }
 
         [Fact]
@@ -78,25 +71,31 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
                 var tree = graph.Kruskal();
                 var edges = tree.Edges;
 
-                foreach (var e in edges)
-                    Assert.Contains(e, expectedTreeEdges);
-
-                foreach (var exedge in expectedTreeEdges)
-                    Assert.Contains(exedge, edges);
+                edges.AssertSetlikeEqual(expectedTreeEdges);
             }
             
         }
 
-        [Fact(Skip = "Hangs tests")]
+        [Fact]
         public void GetsProperEdgeDoubles()
         {
-            
+            if (graph.IsConnected)
+            {
+                var tree = graph.Kruskal();
+                var reduced = tree.Reduce();
+
+                reduced.Edges.AssertSetlikeEqual(expectedEdgesToDuplicate);
+            }
         }
 
-        [Fact(Skip = "Hangs tests")]
+        [Fact]
         public void Postman()
         {
-
+            if (graph.IsConnected)
+            {
+                var eulerCycle = graph.Postman(2);
+                Assert.Equal(expectedEulerCycle, eulerCycle);
+            }
         }
     }
 }

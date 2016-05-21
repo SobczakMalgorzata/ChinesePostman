@@ -8,7 +8,7 @@ namespace ChinskiListonosz.Core.Algorithms
 {
     public static partial class GraphAlgorithms
     {
-        public static Path Postman(IGraph graph, int StartPoint)
+        public static Path Postman(this IGraph graph, int StartPoint)
         {
             throw new NotImplementedException();
             var Odds = graph.Degrees().Where(vdeg => vdeg.Item2 % 2 == 1).Select(vdeg => vdeg.Item1).ToList();

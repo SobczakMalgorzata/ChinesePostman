@@ -18,12 +18,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Trees
         {
             var edges = tree.Reduce().Edges;
 
-            foreach (var e in edges)
-                Assert.Contains(e, expectedReducedEdges);
-
-            foreach (var exedge in expectedReducedEdges)
-                Assert.Contains(exedge, edges);
+            edges.AssertSetlikeEqual(expectedReducedEdges);
         }
-
     }
 }
