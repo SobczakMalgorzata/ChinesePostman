@@ -39,5 +39,16 @@ namespace ChinskiListonosz.Core
         /// </summary>
         /// <returns>List of Paths connecting different vertices.</returns>
         List<Path> Distances();
+        /// <summary>
+        /// Creates a subgraph with all existing edges between given vertices.
+        /// </summary>
+        /// <param name="vertices">List of vertices to be included in subgraph.</param>
+        /// <returns>A graph with all given vertices and all edges from original graph that connect vertices from given set.</returns>
+        IGraph Subgraph(List<int> vertices);
+
+        void AddVertice(int v);
+        void RemoveVertice(int v);
+        void AddEdge(Edge e);
+        void RemoveEdge(Edge e);
     }
 }

@@ -8,15 +8,15 @@ using Xunit;
 
 namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
 {
-    public class EnvelopeWeighted : GraphTestBase
+    public class EnvelopeWeighted : ConnectedGraphTestBase
     {
         public EnvelopeWeighted()
         {
             var a = new Edge(0, 1);
             var b = new Edge(0, 4);
-            var e = new Edge(1, 2, 3);
+            var e = new Edge(1, 2, 2);
             var c = new Edge(1, 3, 10);
-            var f = new Edge(2, 3, 2);
+            var f = new Edge(2, 3, 4);
             var d = new Edge(3, 4);
 
             graph =
@@ -51,12 +51,12 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
                 new Path(new List<Edge> {a,b}, 1),
                 //From 2
                 new Path(new List<Edge> {f}, 2),
-                new Path(new List<Edge> {f,d}, 2),
+                new Path(new List<Edge> {e,a,b}, 2),
                 //From 3
                 new Path(new List<Edge> {d}, 3)
             };
 
-            this.expectedTreeEdges = new List<Edge>() { a, b, d, f };
+            this.expectedTreeEdges = new List<Edge>() { a, b, d, e };
         }
 
         

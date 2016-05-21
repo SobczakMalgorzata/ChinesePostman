@@ -68,13 +68,15 @@
   <ItemGroup>
     <Compile Include="PathTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestGraphs\Graphs\Envelope.cs" />
+    <Compile Include="TestGraphs\Graphs\ConnectedGraphTestBase.cs" />
+    <Compile Include="TestGraphs\Graphs\CrossedSquare.cs" />
     <Compile Include="TestGraphs\Graphs\EnvelopeWeighted.cs" />
     <Compile Include="TestGraphs\Graphs\GraphTestBase.cs" />
     <Compile Include="TestGraphs\Graphs\NotConnected.cs" />
     <Compile Include="TestGraphs\Trees\TreeA.cs" />
     <Compile Include="TestGraphs\Trees\TreeB.cs" />
     <Compile Include="TestGraphs\Trees\TreeTestBase.cs" />
+    <Compile Include="TestMethodsExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

@@ -14,6 +14,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         protected List<Tuple<int, int>> expectedDegrees;
         protected List<Path> expectedPaths;
         protected List<Edge> expectedTreeEdges;
+        protected Path expectedEulerCycle;
 
         [Fact]
         public void IsConnectedTest()
@@ -25,11 +26,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         public void DegreesTest()
         {
             var result = graph.Degrees();
-            foreach (var x in result)
-                Assert.Contains(x, expectedDegrees);
-            
-            foreach (var ed in expectedDegrees)
-                Assert.Contains(ed, result);
+            result.AssertSetlikeEqual(expectedDegrees);
         }
 
         [Fact]
@@ -48,11 +45,7 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         public void DistancesTableTest()
         {
             var result = graph.Distances();
-            foreach (var x in result)
-                Assert.Contains(x, expectedPaths);
-
-            foreach (var expath in expectedPaths)
-                Assert.Contains(expath, result);
+            result.AssertSetlikeEqual(expectedPaths);
         }
 
         [Fact]
@@ -69,21 +62,6 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
                 Assert.Throws<ArgumentException>(() => graph.Kruskal());
         }
 
-        [Fact]
-        public void KruskalGivesMinimalTree()
-        {
-            if(graph.IsConnected)
-            {
-                var tree = graph.Kruskal();
-                var edges = tree.Edges;
-
-                foreach (var e in edges)
-                    Assert.Contains(e, expectedTreeEdges);
-
-                foreach (var exedge in expectedTreeEdges)
-                    Assert.Contains(exedge, edges);
-            }
-            
-        }
+        
     }
 }

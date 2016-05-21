@@ -105,6 +105,61 @@ namespace ChinskiListonosz.Core
             return (Start == u && End == v) || (Start == v && End == u);
         }
 
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            //       
+            // See the full list of guidelines at
+            //   http://go.microsoft.com/fwlink/?LinkID=85237  
+            // and also the guidance for operator== at
+            //   http://go.microsoft.com/fwlink/?LinkId=85238
+            //
+
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            var theOther = obj as Path;
+
+            var sameLength = this.Edges.Count == theOther.Edges.Count;
+            List<Edge> compareTo;
+            if (Start == theOther.Start && End == theOther.End)
+                compareTo = theOther.Edges.ToList();
+            else if (Start == theOther.End && End == theOther.Start)
+                compareTo = theOther.Edges.Reverse().ToList();
+            else
+                return false;
+
+            var result = true;
+            var edgesList = this.Edges.ToList();
+            for (int i = 0; i < Edges.Count; i++)
+            {
+                if (!edgesList[i].Equals(compareTo[i]))
+                    result = false;
+            }
+            return result;
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            // TODO: write your implementation of GetHashCode() here
+            return Edges.Count;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder(Start.ToString());
+            var v = Start;
+            foreach (var e in this.Edges)
+            {
+                var u = e.OtherEndTo(v);
+                sb.AppendFormat("->{0}", u);
+                v = u;
+            }
+            return sb.ToString();
+        }
 
     }
 }

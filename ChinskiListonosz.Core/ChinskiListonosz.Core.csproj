@@ -41,10 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\Kruskal.cs" />
+    <Compile Include="Algorithms\Postman.cs" />
+    <Compile Include="Algorithms\Reduce.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Graph.cs" />
+    <Compile Include="GraphBase.cs" />
     <Compile Include="IGraph.cs" />
-    <Compile Include="MultiEdge.cs" />
+    <Compile Include="MultiGraph.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
