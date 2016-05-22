@@ -14,7 +14,6 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         protected List<Tuple<int, int>> expectedDegrees;
         protected List<Path> expectedPaths;
         protected List<Edge> expectedTreeEdges;
-        protected Path expectedEulerCycle;
 
         [Fact]
         public void IsConnectedTest()

@@ -27,6 +27,10 @@ namespace ChinskiListonosz.Core
         {
             return (U == v || V == v);
         }
+        public bool IsIncident(Edge e)
+        {
+            return (e.U == U || e.U == V || e.V == U || e.V == V);
+        }
 
         public int OtherEndTo(int u)
         {

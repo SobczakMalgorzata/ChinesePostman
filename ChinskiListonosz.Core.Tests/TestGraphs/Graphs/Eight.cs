@@ -85,6 +85,22 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
             };
 
             Assert.Contains(result, possibleCycles);
+        }
+
+        [Fact]
+        public void CalculatePostman()
+        {
+            var result = graph.Postman(5);
+
+            var possibleCycles = new List<Path>()
+            {
+                new Path(new List<Edge>() { h, f, c, a, b, d, e, g }),
+                new Path(new List<Edge>() { h, f, d, b, a, c, e, g }),
+                new Path(new List<Edge>() { g, e, c, a, b, d, f, h }),
+                new Path(new List<Edge>() { g, e, c, a, b, d, f, h })
+            };
+
+            Assert.Contains(result, possibleCycles);
 
 
         }
