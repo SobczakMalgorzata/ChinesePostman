@@ -16,8 +16,8 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         static Edge d = new Edge(2, 6, 4);
         static Edge e = new Edge(3, 6, 6);
         static Edge f = new Edge(4, 6, 5);
-        static Edge g = new Edge(3, 5, 10);
-        static Edge h = new Edge(4, 5, 8);
+        static Edge g = new Edge(5, 3, 10);
+        static Edge h = new Edge(5, 4, 8);
 
         public Eight()
         {

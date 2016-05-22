@@ -23,6 +23,14 @@ namespace ChinskiListonosz.Core
             private set { end = value; }
         }
 
+        public List<int> VisitedVertices
+        {
+            get
+            {
+                return Edges.SelectMany(e => new List<int>() { e.V, e.U }).Distinct().ToList();
+            }
+        }
+
         public Path(Edge e, bool reverse = false)
         {
             Edges.AddLast(e);
@@ -97,6 +105,30 @@ namespace ChinskiListonosz.Core
             }
             else
                 throw new ArgumentException("The edge is not connecting to the start of the Path");
+            return this;
+        }
+        public Path InsertAtSuitable(Path path)
+        {
+            if (path.Start != path.End)
+                throw new ArgumentException("Edges to insert create not a valid cycle");
+
+            int commonVertex = path.Start;
+            var node = Edges.First;
+            if (path.Start == this.Start)
+            {
+                foreach (var edge in path.Edges)
+                    Edges.AddBefore(node, edge);
+                return this;
+            }
+
+            node = Edges.Find(Edges.First(e => e.IsIncident(commonVertex)));
+            if (node == null)
+                throw new ArgumentException("Path doesn't have a common element with Edges to insert");
+
+            foreach (var edge in path.Edges) {
+                Edges.AddAfter(node, edge);
+                node = node.Next;
+            }
             return this;
         }
 
