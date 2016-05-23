@@ -10,6 +10,8 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
 {
     public abstract class ConnectedGraphTestBase : GraphTestBase
     {
+        protected List<Path> expectedEulerCycles;
+
         [Fact]
         public void KruskalGivesMinimalTree()
         {
@@ -22,8 +24,19 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
         [Fact]
         public void Postman()
         {
-            var eulerCycle = graph.Postman(2);
-            Assert.Equal(expectedEulerCycle, eulerCycle);
+            var startingPoint = 2;
+            var eulerCycle = graph.Postman(startingPoint);
+
+            Assert.Equal(eulerCycle.Start, startingPoint);
+            Assert.Equal(eulerCycle.End, startingPoint);
+
+            for(int i =0; i< eulerCycle.Edges.Count(); i++)
+            {
+                Assert.True(eulerCycle.Edges.ElementAt(i).IsIncident(eulerCycle.Edges.ElementAt(i % eulerCycle.Edges.Count)));
+            }
+
+            eulerCycle.Edges.Distinct().AssertSetlikeEqual(graph.Edges);
         }
     }
 }
+ 
