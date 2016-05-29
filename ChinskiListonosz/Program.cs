@@ -44,14 +44,18 @@ namespace ChinskiListonosz
             Console.WriteLine("Starting Point = {0}", startingPoint);
             var edges = input
                         .Skip(1)
-                        .Select(line => line
-                                        .Split(',')
-                                        .Select(i => int.Parse(i))
-                                        .ToArray())
-                        .Select(tab => new Edge(tab[0], tab[1], tab[2]))
-                        .ToList();
+                        .Select(line => line.Split(','))
+                        .Select(tab => new Tuple<string,Edge>(
+                                    tab[0], 
+                                    new Edge(
+                                        int.Parse(tab[1]), 
+                                        int.Parse(tab[2]), 
+                                        int.Parse(tab[3])
+                                    )
+                                ))
+                        .ToDictionary(tup => tup.Item1, tup => tup.Item2);
             Console.WriteLine("{0} edges were loaded.", edges.Count);
-            var graph = new Graph(edges);
+            var graph = new Graph(edges.Values);
 
             var answer = graph.Postman(startingPoint);
             foreach (var edge in answer.Edges)
@@ -63,7 +67,7 @@ namespace ChinskiListonosz
             try
             {
                 var cycleLengthLine = answer.Length.ToString();
-                var cycleEdgesLine = string.Join(",",answer.Edges.Select(e => edges.IndexOf(e)));
+                var cycleEdgesLine = string.Join(",",answer.Edges.Select(e => edges.First(x => x.Value == e).Key));
                 File.WriteAllLines(output_path, new string[] { cycleLengthLine, cycleEdgesLine });
             }
             catch
