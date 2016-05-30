@@ -67,8 +67,9 @@ namespace ChinskiListonosz
             try
             {
                 var cycleLengthLine = answer.Length.ToString();
+                var cycleVerticesLine = answer.ToString(",");
                 var cycleEdgesLine = string.Join(",",answer.Edges.Select(e => edges.First(x => x.Value == e).Key));
-                File.WriteAllLines(output_path, new string[] { cycleLengthLine, cycleEdgesLine });
+                File.WriteAllLines(output_path, new string[] { cycleLengthLine, cycleVerticesLine ,cycleEdgesLine });
             }
             catch
             {

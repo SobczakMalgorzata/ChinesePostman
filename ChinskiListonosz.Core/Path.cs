@@ -182,12 +182,17 @@ namespace ChinskiListonosz.Core
 
         public override string ToString()
         {
+            return ToString();
+        }
+
+        public string ToString(string separator = "->")
+        {
             var sb = new StringBuilder(Start.ToString());
             var v = Start;
             foreach (var e in this.Edges)
             {
                 var u = e.OtherEndTo(v);
-                sb.AppendFormat("->{0}", u);
+                sb.AppendFormat("{0}{1}", separator, u);
                 v = u;
             }
             return sb.ToString();
