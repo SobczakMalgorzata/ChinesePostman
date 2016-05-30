@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChinskiListonosz.Core;
+using Xunit;
+using ChinskiListonosz.Core.Algorithms;
 
 namespace ChinskiListonosz.Core.Tests.TestGraphs.Trees
 {
@@ -31,6 +33,12 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Trees
                 new List<Edge>() { a, b, c, d, e, f, g, h, i, j, k, l, m }
             );
             expectedReducedEdges = new List<Edge>() { a, e, f, g, h, i, k, l, m };
+        }
+
+        [Fact]
+        public void PostmanTest()
+        {
+            var path = tree.Postman(4);
         }
     }
 }

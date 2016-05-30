@@ -61,13 +61,13 @@ namespace ChinskiListonosz.Core
                 edges[e]--;
         }
 
-        protected override int[] DegreesFromEdges(List<int> vertices)
+        protected override IDictionary<int,int> DegreesFromEdges(List<int> vertices)
         {
-            var degrees = new int[NumberOfVertices];
+            var degrees = vertices.ToDictionary(i => i, i => 0);
             foreach (var edgeN in edges)
             {
-                degrees[vertices.IndexOf(edgeN.Key.U)] += edgeN.Value;
-                degrees[vertices.IndexOf(edgeN.Key.V)] += edgeN.Value;
+                degrees[edgeN.Key.U] += edgeN.Value;
+                degrees[edgeN.Key.V] += edgeN.Value;
             }
 
             return degrees;

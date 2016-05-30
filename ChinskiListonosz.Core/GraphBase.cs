@@ -44,15 +44,11 @@ namespace ChinskiListonosz.Core
             var result = new List<Tuple<int, int>>();
             var verts = Vertices;
             var degrees = DegreesFromEdges(verts);
-            
-            for (int i = 0; i < NumberOfVertices; i++)
-            {
-                result.Add(new Tuple<int, int>(verts[i], degrees[i]));
-            }
-            return result;
+                        
+            return degrees.Select(vdeg => new Tuple<int,int>(vdeg.Key,vdeg.Value)).ToList();
         }
 
-        protected abstract int[] DegreesFromEdges(List<int> vertices);
+        protected abstract IDictionary<int,int> DegreesFromEdges(List<int> vertices);
 
         public List<Path> Distances()
         {
