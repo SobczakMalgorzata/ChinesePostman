@@ -24,18 +24,7 @@ namespace ChinskiListonosz.Core
         public Graph(IEnumerable<Edge> E) :
             this(new HashSet<int>(E.SelectMany(e => new int[] { e.U, e.V })).Distinct(), E)
         { }
-        /// <summary>
-        /// Constructs a complete graph with k vertices with equal edge weights.
-        /// </summary>
-        /// <param name="k">Number of vertices in complete graph.</param>
-        public Graph(int k) : this(Enumerable.Range(0, k))
-        {
-            for (int u = 0; u < k; u++)
-                for (int v = 0; v < k; v++)
-                {
-                    this.AddEdge(new Edge(u, v));
-                }
-        }
+       
         public Graph(Graph g) : this(g.Vertices, g.edges.Select(e => e.Clone())) { }
         public Graph Clone()
         {
