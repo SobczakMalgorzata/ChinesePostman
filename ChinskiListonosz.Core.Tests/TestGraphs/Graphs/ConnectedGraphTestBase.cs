@@ -30,6 +30,11 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Graphs
             Assert.Equal(eulerCycle.Start, startingPoint);
             Assert.Equal(eulerCycle.End, startingPoint);
 
+            foreach (var edge in eulerCycle.Edges)
+            {
+                Assert.Contains(edge, graph.Edges);
+            }
+
             for(int i =0; i< eulerCycle.Edges.Count(); i++)
             {
                 Assert.True(eulerCycle.Edges.ElementAt(i).IsIncident(eulerCycle.Edges.ElementAt(i % eulerCycle.Edges.Count)));

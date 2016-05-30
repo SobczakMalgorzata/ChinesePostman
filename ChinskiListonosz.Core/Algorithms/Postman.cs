@@ -38,7 +38,7 @@ namespace ChinskiListonosz.Core.Algorithms
                 var T = H.Kruskal();
                 var Tprime = T.Reduce();
 
-                Eprime.AddRange(Tprime.Edges);
+                Eprime.AddRange(Tprime.Edges.SelectMany(e => distances.First(p => p.Connects(e.U, e.V)).Edges));
             }
             var Gprime = new MultiGraph(graph.Vertices, Eprime);
             return Gprime.EulerCycle(startPoint);

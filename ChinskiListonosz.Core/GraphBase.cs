@@ -67,8 +67,6 @@ namespace ChinskiListonosz.Core
             var prev = Vertices.ToDictionary(x => x, x => (int?)null);
             var unvisited = this.Vertices;
 
-            for (int i = 0; i < NumberOfVertices; i++)
-                dist[i] = int.MaxValue;
             dist[startVertex] = 0;
 
             var v = startVertex;

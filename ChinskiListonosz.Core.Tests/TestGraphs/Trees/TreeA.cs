@@ -34,11 +34,5 @@ namespace ChinskiListonosz.Core.Tests.TestGraphs.Trees
             );
             expectedReducedEdges = new List<Edge>() { a, e, f, g, h, i, k, l, m };
         }
-
-        [Fact]
-        public void PostmanTest()
-        {
-            var path = tree.Postman(4);
-        }
     }
 }
