@@ -58,17 +58,24 @@ namespace ChinskiListonosz
             var graph = new Graph(edges.Values);
 
             var answer = graph.Postman(startingPoint);
-            foreach (var edge in answer.Edges)
+            foreach (var edge in edges)
             {
-                Console.WriteLine(edge.ToString());
+                Console.WriteLine("{0} - {1}", edge.Key, edge.Value.ToString());
             }
-            Console.WriteLine(answer.ToString());
+
+
+            var cycleLengthLine = answer.Length.ToString();
+            var cycleVerticesLine = answer.ToString(",");
+            var cycleEdgesLine = string.Join(",", answer.Edges.Select(e => edges.First(x => x.Value == e).Key));
+
+            Console.WriteLine();
+            Console.WriteLine("Length of cycle: {0}", cycleLengthLine);
+            Console.WriteLine("Final Path (vertices): {0}", cycleVerticesLine);
+            Console.WriteLine("Final Path (edges): {0}", cycleEdgesLine);
+
 
             try
             {
-                var cycleLengthLine = answer.Length.ToString();
-                var cycleVerticesLine = answer.ToString(",");
-                var cycleEdgesLine = string.Join(",",answer.Edges.Select(e => edges.First(x => x.Value == e).Key));
                 File.WriteAllLines(output_path, new string[] { cycleLengthLine, cycleVerticesLine ,cycleEdgesLine });
             }
             catch
