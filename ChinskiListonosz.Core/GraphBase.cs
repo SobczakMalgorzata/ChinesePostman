@@ -63,8 +63,8 @@ namespace ChinskiListonosz.Core
 
         protected List<Path> Dijkstra(int startVertex)
         {
-            int[] dist = new int[NumberOfVertices];
-            int?[] prev = new int?[NumberOfVertices];
+            var dist = Vertices.ToDictionary(x => x, x => int.MaxValue);
+            var prev = Vertices.ToDictionary(x => x, x => (int?)null);
             var unvisited = this.Vertices;
 
             for (int i = 0; i < NumberOfVertices; i++)
@@ -99,7 +99,7 @@ namespace ChinskiListonosz.Core
             return RecreatePaths(startVertex, prev);
         }
 
-        protected List<Path> RecreatePaths(int startVertex, int?[] prev)
+        protected List<Path> RecreatePaths(int startVertex, IDictionary<int,int?> prev)
         {
             var paths = new List<Path>();
             foreach (var ver in this.Vertices)
